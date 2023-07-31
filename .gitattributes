@@ -1,2 +1,5 @@
 * linguist-vendored
-*.css linguist-vendored=false
+*.py
+*.js
+*.html
+linguist-vendored=false
