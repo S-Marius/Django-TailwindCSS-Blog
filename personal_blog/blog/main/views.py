@@ -12,7 +12,11 @@ from .forms import BlogPostForm
 def main_page(request):
     blog_posts = BlogPost.objects.all().order_by('-pub_date')
     paginator = Paginator(blog_posts, 6)  # Show 10 posts per page
+    
     page_number = request.GET.get('page')
+
+    # For example, when a user visits /main_page/, the page_number will be None, and the view will render the first page of blog posts. If the user visits /main_page/?page=2, the page_number will be '2', and the view will render the second page of blog posts. This way, users can navigate through different pages of blog posts using the 'page' parameter in the URL.
+
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'main_page.html', {'page_obj': page_obj})
