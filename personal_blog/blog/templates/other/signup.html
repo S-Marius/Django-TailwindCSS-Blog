@@ -1,0 +1,31 @@
+{% extends "base/base.html" %}
+{% load static i18n %}
+
+{% block content %} 
+<h2 class="text-center font-bold p-5 text-2xl">Sign Up</h2>
+<div class="max-w-xl mx-auto h-screen-full">
+    <form method="post" class="bg-slate-300 shadow-md rounded p-5">
+      {% csrf_token %} 
+      <div class="mb-4">
+        <label class="block text-gray-700 text-lg font-bold mb-2" for="{{ form.username.id_for_label }}">Username:</label>
+        {{ form.username }}
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-lg font-bold mb-2" for="{{ form.email.id_for_label }}">Email:</label>
+        {{ form.email }}
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-lg font-bold mb-2" for="{{ form.password1.id_for_label }}">Password:</label>
+        {{ form.password1 }}
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-lg font-bold mb-2" for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+        {{ form.password2 }}
+      </div>
+      <div class="flex items-center justify-center mt-5">
+        <button type="submit" class="py-2 px-3 bg-red-300 text-gray-700 rounded shadow hover:bg-red-400 transition duration-300">Register</button>
+      </div>
+    </form>
+</div>
+
+{% endblock %}

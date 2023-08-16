@@ -1,0 +1,34 @@
+{% extends "base/base.html" %}
+{% load static i18n %}
+
+{% block content %} 
+
+<h2 class="text-center font-bold text-2xl p-3">Login Page</h2>
+
+{% for message in messages %}
+  <div class="font-bold text-xl text-center bg-cyan-400 font-light lg:w-1/4 p-2 mb-5">
+      <p>{{ message }}</p>
+  </div>
+{% endfor %}
+
+<div class="max-w-xl mx-auto h-screen-full">
+  <form method="post" class="bg-slate-300 shadow-md rounded p-5">
+    {% csrf_token %}
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" required /><br />
+  
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required /><br />
+  
+    <div class="flex items-center justify-center mt-5 space-x-5">
+      <button type="submit" class="py-2 px-3 bg-yellow-400 text-yellow-900 rounded shadow hover:bg-yellow-300 transition duration-300">Login</button>
+      <a href="{% url 'signup' %}">
+        <button type="button" class="py-2 px-3 bg-red-300 text-gray-700 rounded shadow hover:bg-red-400 transition duration-300">Register</button>
+      </a>
+    </div>
+    <div class="mt-5">
+      <a href="{% url 'password_reset' %}" class="bg-cyan-400 p-1">I forgot password</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

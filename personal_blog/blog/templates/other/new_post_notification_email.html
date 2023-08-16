@@ -1,0 +1,15 @@
+<!-- new_post_notification_email.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Blog Post Alert</title>
+</head>
+<body>
+    <h2>New Blog Post Alert</h2>
+    <p>A new blog post has been published on {{ site.domain }}:</p>
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.content }}</p>
+    <p>Read more at: <a href="{{ post.get_absolute_url }}">{{ post.get_absolute_url }}</a></p>
+</body>
+</html>

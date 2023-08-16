@@ -1,0 +1,35 @@
+{% extends "base/base.html" %}
+{% load static i18n %}
+
+{% block content %} 
+<div class="max-w-7xl mx-auto p-3">
+    {% if sent %}
+        <h1 class="font-bold text-center text-2xl">email successfully sent</h1>
+        <p>
+            <span class="font-light">"{{ post.title }}"</span> was successfully sent to <span class="font-bold">{{ form.cleaned_data.to }}</span>
+        </p>
+    {% else %} 
+        <h1 class="text-center font-bold text-2xl mt-3">Share "{{ post.title }}" by e-mail</h1>
+        <form method="post">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+            <br>
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            <br>
+            {{ form.to.label_tag }}
+            {{ form.to }}
+            <br>
+            {{ form.comments.label_tag }}
+            {{ form.comments }}
+            <br>
+            {% csrf_token %}
+            <div class="flex justify-center">
+                <input type="submit" value="Send E-mail" class="text-center bg-cyan-400 px-3 py-2 rounded-full mt-5 cursor-pointer hover:bg-cyan-500">
+            </div>
+        </form>
+    {% endif %}
+</div>
+
+{% endblock %}
+

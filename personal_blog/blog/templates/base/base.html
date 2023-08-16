@@ -1,0 +1,111 @@
+
+{% load static i18n %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Main Page</title>
+    <link rel="stylesheet" href="{% static 'css/blogmain-ui.css' %}">
+  </head>
+
+  <body>
+    <!-- Section for NAV and HERO Section to be part of the same element block -->
+    <div class="flex flex-col">
+        <nav class="bg-gray-500 font-mono">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-between">
+                    <div class="flex">
+                        <div class="text-xl">
+                            <a href="/" class="flex items-center py-5 px-1 text-gray-700 hover:text-red-900">
+                                <svg class="w-8 h-8 mr-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                              </svg>
+                              <span class="font-bold">Marius' Blog</span>
+                              </a>
+                        </div>
+                    </div>
+                    <!-- secondary nav-->
+                    <div class="hidden md:flex items-center space-x-1 text-xl">
+                        <a href="{% url 'create_blog' %}" class="py-5 px-6">Create Blog</a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'logout' %}" class="py-2 px-3 bg-yellow-400 text-yellow-900 rounded shadow hover:bg-yellow-300 transition duration-300">Logout</a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="py-2 px-3 bg-yellow-400 text-yellow-900 rounded shadow hover:bg-yellow-300 transition duration-300">Login</a>
+                        {% endif %}
+                    </div>
+                    
+    
+                    <!-- mobile button -->
+                    <div class="md:hidden flex items-center">
+                        <button class="mobile-menu-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                              </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- mobile menu -->
+            <div class="hidden mobile-menu">
+                <a href="{% url 'create_blog' %}" class="block py-2 px-4 text-sm hover:bg-gray-200">Create Blog</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="block py-2 px-4 text-sm hover:bg-gray-200">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="block py-2 px-4 text-sm hover:bg-gray-200">Login</a>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+    {% block hero_display %} {% endblock %}
+    
+    {% block content %} {% endblock %}
+
+    {% block bullshit %} {% endblock %}
+
+    <footer class="bg-cyan-500 mt-10">
+        <div class="flex items-center justify-around">
+            <div class="mt-3 mb-3 flex flex-col">
+                <a href="#" class="hover:text-gray-500 transition 200">Contact</a>
+                <a href="#" class="hover:text-gray-500 transition 200">About</a>
+                <a href="#" class="hover:text-gray-500 transition 200">Info</a>
+            </div>
+            <div class="mt-3 mb-3 flex flex-col">
+                <a href="#" class="hover:text-gray-500 transition 200">Youtube</a>
+                <a href="#" class="hover:text-gray-500 transition 200">GitHub</a>
+            </div>
+            <div class="mt-3 mb-3 flex flex-col">
+                <a href="#" class="hover:text-gray-500 transition 200">Instagram</a>
+                <a href="#" class="hover:text-gray-500 transition 200">LinkedIn</a>
+            </div>
+        </div>
+        <p class="text-center p-3 font-light text-md text-white bg-cyan-600">Copyright @2023 / Marius</p>
+    </footer>
+
+  </body>
+  <script>
+    // Select necessary elements
+    const btn = document.querySelector("button.mobile-menu-button");
+    const menu = document.querySelector(".mobile-menu");
+    const heroSection = document.querySelector('#section-hero-image');
+    const cards = document.querySelectorAll(".card");
+
+    // Get the URL for the background image using Django's static template tag
+    const backgroundImageUrl = "{% static 'img/hero-section.jpg' %}";
+
+    // Add events
+    btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+    });
+
+    // Set image and properties
+    heroSection.style.backgroundImage = `url(${backgroundImageUrl})`;
+    heroSection.style.backgroundSize = "cover";
+
+    // Add an event listener to the card
+    cards.forEach((card) => {
+        card.addEventListener("click", () => {
+            const url = card.getAttribute("data-url");
+            window.location.href = url;
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,6 @@
+<h2 class="font-bold">Add a new comment</h2>
+<form action="{% url 'post_comment' post.id %}" method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="submit" value="Add comment" class="px-3 py-2 bg-cyan-400 rounded-xl hover:bg-cyan-500 cursor-pointer">
+</form>

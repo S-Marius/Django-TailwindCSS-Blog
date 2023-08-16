@@ -1,0 +1,10 @@
+<div style="background: rgb(199,196,255);
+            background: -moz-linear-gradient(90deg, rgba(199,196,255,1) 0%, rgba(255,158,20,1) 100%);
+            background: -webkit-linear-gradient(90deg, rgba(199,196,255,1) 0%, rgba(255,158,20,1) 100%);
+            background: linear-gradient(90deg, rgba(199,196,255,1) 0%, rgba(255,158,20,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c7c4ff',endColorstr='#ff9e14',GradientType=1); padding: 1rem; font-family: arial;">
+  <h2 style="text-align: center">'{{ name }}' recommends you to read:</h2>
+    <h3 style="text-align: center">'{{ blog_post.title }}'</h3>
+    <p>Read the full post at <a href="{{ post_url }}">{{ post_url }}</a></p>
+    <p>Message Content: '{{ comments }}'</p>
+</div>

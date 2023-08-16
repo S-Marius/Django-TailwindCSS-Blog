@@ -1,0 +1,106 @@
+{% extends "base/base.html" %}
+{% load static i18n %}
+
+{% block content %} 
+<h3 class="text-center font-bold text-3xl p-5">Create Blog Post</h3>
+
+<div class="max-w-xl mx-auto">
+    <form method="post" enctype="multipart/form-data" class="bg-slate-300 shadow-md rounded p-5" id="create-blog-form">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label class="block text-gray-700 text-lg font-bold mb-2" for="{{ form.title.id_for_label }}">Title:</label>
+            {{ form.title }}
+            <p id="title-error" class="text-red-600" style="display: none;"></p>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-lg font-bold mb-2" for="{{ form.content.id_for_label }}">Content:</label>
+            {{ form.content }}
+            <p id="content-error" class="text-red-600" style="display: none;"></p>
+        </div>
+        <div class="mb-4">
+            <div class="form-button-submit">
+                <div class="flex">
+                    <label class="text-lg font-semibold mr-3" for="{{ form.thumbnail.id_for_label }}">Upload: </label>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-emerald-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
+                      </svg>
+                </div>
+                {{ form.thumbnail }}
+                <img id="thumbnail-preview" class="mt-2" src="#" alt="Preview" style="display: none;">
+            </div>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-lg font-bold mb-2" for="{{ form.content.id_for_label }}">Tags:</label>
+            {{ form.tags }}
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-lg font-bold mb-2" for="{{ form.status.id_for_label }}">Status:</label>
+            {{ form.status }}
+        </div>
+        <div class="flex items-center justify-center">
+            <button type="submit" class="py-2 px-3 bg-yellow-400 text-yellow-900 rounded shadow hover:bg-yellow-300 transition duration-300">Create</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // JavaScript to display image preview
+    const thumbnailInput = document.getElementById('id_thumbnail');
+    const thumbnailPreview = document.getElementById('thumbnail-preview');
+
+    const createBlogForm = document.getElementById('create-blog-form');
+
+    thumbnailInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function () {
+            thumbnailPreview.src = reader.result;
+            thumbnailPreview.style.display = 'block';
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            thumbnailPreview.src = '#';
+            thumbnailPreview.style.display = 'none';
+        }
+    });
+
+    createBlogForm.addEventListener('submit', function (event) {
+        // Get the form fields and their values
+        const titleField = document.getElementById('id_title');
+        const contentField = document.getElementById('id_content');
+
+        const titleValue = titleField.value.trim();
+        const contentValue = contentField.value.trim();
+
+        // Validate title length
+        if (titleValue.length < 5 || titleValue.length > 30) {
+            event.preventDefault();
+            const titleError = document.getElementById('title-error');
+            titleError.textContent = 'Title must be between 5 and 30 characters.';
+            titleError.style.display = 'block';
+            titleError.style.color = 'rgb(255, 69, 106)';
+            titleError.style.fontWeight = 'bold';
+        } else {
+            const titleError = document.getElementById('title-error');
+            titleError.style.display = 'none';
+        }
+
+        // Validate content length
+        if (contentValue.length < 100 || contentValue.length > 2500) {
+            event.preventDefault();
+            const contentError = document.getElementById('content-error');
+            contentError.textContent = 'Content must be between 100 and 2500 characters.';
+            contentError.style.display = 'block';
+            contentError.style.color = 'rgb(255, 69, 106)';
+            contentError.style.fontWeight = 'bold';
+        } else {
+            const contentError = document.getElementById('content-error');
+            contentError.style.display = 'none';
+        }
+    });
+</script>
+
+{% endblock %}

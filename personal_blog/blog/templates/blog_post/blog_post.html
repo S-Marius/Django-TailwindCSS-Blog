@@ -1,0 +1,77 @@
+{% extends "base/base.html" %}
+{% load static i18n %}
+
+{% block content %} 
+<div class="max-w-7xl mx-auto p-3">
+    <h2 class="font-light text-4xl text-center p-5">{{ post.title }}</h2>
+    <div class="shadow p-5">
+        <div class="flex flex-col mb-5 gap-3">
+            <p><strong>Author:</strong> {{ post.author.username }}</p>
+            <p><strong>Creation Date:</strong> {{ post.pub_date|date:"F d, Y H:i" }}</p>
+            <p><strong>Tags: </strong>
+                {% for tag in post.tags.all %}
+                    <span class="badge">{{ tag }}</span>
+                {% endfor %}
+            </p>
+            <p class="mt-2">
+                <a href="{% url 'blogpost_share' post.id %}" class="bg-cyan-400 px-3 py-2 rounded-xl hover:bg-cyan-500">Share this Post!</a>
+            </p>
+        </div>
+        <div class="flex flex-col">
+            <div class=""><img src="{{ post.thumbnail.url }}" alt=""></div>
+            <div class="mt-5">{{ post.content | safe }}</div>
+        </div>
+    </div>
+    <div class="mt-5">
+        <h2 class="font-bold text-xl mb-5">Similar Posts:</h2>
+        <div class="flex">
+            {% for post in similar_posts %}
+                <div class="lg:w-1/4 p-1 cursor-pointer hover:bg-gray-200 mb-5">
+                    <img src="{{ post.thumbnail.url }}" alt="">
+                    <div>
+                        <a href="{{ post.get_absolute_url }}" class="font-bold">{{ post.title }}</a>
+                        <hr>
+                        <p>{{ post.content | safe | slice:"75" }}...</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p>There are no similar posts yet!</p>
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+    <div class="mt-5 mb-2">
+        {% with comments.count as total_comments %}
+        <h2>
+            {{ total_comments }} comment{{ total_comments|pluralize }}
+        </h2>
+        {% endwith %}
+    </div>
+    <div class="my-5">
+        {% include "blog_post/comment_form.html" %}
+
+        {% if comment %}
+            <h2 class="text-emerald-500 mt-3">Your comment has been added.</h2>
+        {% endif %}
+    </div>
+    <div>
+        {% for comment in comments %}
+            <div class="mt-3 bg-gray-100 p-3 rounded-xl">
+                <div class="flex gap-3 font-bold">
+                    <h2 class="hover:text-gray-500 cursor-pointer">@{{ comment.name }}</h2>
+                    <h2 class="">{{ comment.created|date:"F d, Y" }}</h2>
+                </div>
+                <p class="font-light">
+                    {{ comment.body }}
+                </p>
+            </div>
+        {% empty %}
+            <div>
+                <p>there are no comments</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,63 @@
+{% extends "base/base.html" %}
+{% load static i18n %}
+
+{% block hero_display %}
+<section class="flex-1 flex items-center text-white py-[330px]" id="section-hero-image">
+    <div class="text-center mx-auto">
+        <h1 class="text-4xl md:text-6xl font-semibold">Welcome to my Blog</h1>
+        <p class="font-light text-3xl mt-6 p-3">Blog built by Marius in Django and TailwindCSS to show you the wonders of technology!</p>
+        <a href="#blog_posts_display" class="px-5 py-2 mt-5 text-2xl inline-block bg-cyan-500 text-white hover:bg-cyan-400 transition-colors">Read all the posts!</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+
+<h3 id="blog_posts_display" class="text-center font-bold text-3xl py-5">Blog Posts:</h3>
+{% if tag %}
+    <h2 class="text-center font-light mb-5 text-xl">Posts tagged with "{{ tag.name }}"</h2>
+{% endif %}
+
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-10">
+    {% for post in page_obj %}
+    <div class="card lg:w-1/4 md:w-1/3 sm:w-1/2 cursor-pointer hover:text-red-900" data-url="{{ post.get_absolute_url }}">
+        <img src="{{ post.thumbnail.url }}" alt="Blog Article Photo">
+        <div class="p-5 flex-col gap-3">
+            <!-- tags -->
+            <div class="flex items-center gap-2 mb-3">
+                {% for tag in post.tags.all %}
+                    <a href="{% url 'post_list_by_tag' tag.slug %}">
+                        <span class="badge hover:bg-cyan-400">{{ tag }}</span>
+                    </a>
+                {% endfor %}
+            </div>
+            <!-- blog title -->
+            <h2 class="product-title mt-2">{{ post.title }}</h2>
+            <p><span class="font-bold mt-1">Author</span>: {{ post.author.username }}</p>
+            <p><span class="font-bold mt-1">Description</span>: {{ post.content|slice:"100" }}...</p>
+            <p><span class="font-bold mt-1">Creation Date</span>: {{ post.pub_date|date:"F d, Y H:i" }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<!-- Display pagination links -->
+<div class="flex items-center justify-center mt-5">
+    <div class="pagination mt-5">
+        <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="px-5 py-2 bg-slate-300 rounded shadow">previous</a>
+        {% endif %}
+    
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+    
+        {% if page_obj.has_next %}
+        
+            <a href="?page={{ page_obj.next_page_number }}" class="px-5 py-2 bg-slate-300 rounded shadow">next</a>
+        {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .card {
+        @apply 
+        bg-white text-gray-700
+        w-72 min-h-[10rem]
+        shadow-lg rounded-md overflow-hidden
+    }
+
+    .badge {
+        @apply
+        px-3 py-1 rounded-full text-xs bg-gray-100
+    }
+
+    .product-title {
+        @apply 
+        font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap
+    }
+
+    .form-button-submit {
+        @apply 
+        relative inline-block cursor-pointer p-4 border border-gray-300 rounded bg-gray-100 hover:bg-sky-100;
+    }
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="tel"], textarea {
+    @apply
+    w-full border border-gray-600 my-1 py-2 px-3 rounded-lg;
+}
+
+input[type="file"] {
+    @apply
+    absolute inset-0 w-full h-full opacity-0 cursor-pointer;
+}
