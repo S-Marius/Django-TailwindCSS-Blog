@@ -1,13 +1,15 @@
 # Django-TailwindCSS-Blog
 A blog webapp created using Django and TailwindCSS.
 
-THE project includes many functionalities, such as Pagination, login, register, signup, logout, post tags implementation, along with using Django's most up to date practices. You won't find a better project >.< !
+THE project includes many functionalities, such as Pagination, signup/login, tag system, email sending system, sitemap, blog comments, similar posts system, along with using Django's most up to date practices. You won't find a better project >.< !
 <hr>
 <img src="https://i.imgur.com/S5XFWRR.png" alt="Main Page first part / Desktop"> 
 <br>
 <img src="https://i.imgur.com/rSsVFno.png" alt="Main Page second part / Desktop">
 <br>
 <img src="https://i.imgur.com/mK7eLPk.png" alt="Create blog Page / Desktop">
+<br>
+<img src="https://i.imgur.com/GAeAgNp.png" alt="Create blog Page 2 / Desktop">
 <br>
 <img src="https://i.imgur.com/sdf8sDt.png" alt="Blog Post Page / Desktop">
 <br>
